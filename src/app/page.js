@@ -20,6 +20,7 @@ import logger from "@/logger";
 // };
 
 import styles from "./page.module.css";
+import Link from "next/link";
 async function getAllPost(page) {
   const response = await fetch(`http://localhost:3042/posts?_page=${page}&_per_page=6`);
   if (!response.ok) {
@@ -31,10 +32,12 @@ async function getAllPost(page) {
 }
 
 export default async function Home() {
-  const { data: posts } = await getAllPost(1);
+  const { data: posts, prev, next } = await getAllPost(1);
   return (
     <main className={styles.grid}>
       {posts.map(post => <CardPost  key={post.id} post={post} /> )}
+        {prev && <Link href={`/?page=${prev}`}> Página Anterior</Link>}
+        {next && <Link href={`/?page=${next}`}>Próxima Página</Link>}
     </main>
   );
 }
