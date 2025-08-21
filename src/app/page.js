@@ -19,6 +19,7 @@ import logger from "@/logger";
 //   },
 // };
 
+import styles from "./page.module.css";
 async function getAllPost() {
   const response = await fetch("http://localhost:3042/posts");
   if (!response.ok) {
@@ -32,7 +33,7 @@ async function getAllPost() {
 export default async function Home() {
   const posts = await getAllPost();
   return (
-    <main>
+    <main className={styles.grid}>
       {posts.map(post => <CardPost post={post} /> )}
     </main>
   );
